@@ -27,8 +27,7 @@ def clean_states(raw, previous_positions):
     raw: the response from OpenSky
     previous_positions: {icao24: time_position} from store.latest_time_position()
 
-    Returns list[dict], one per aircraft. poll_id is left out on purpose
-        - store.write_poll() handles this
+    Returns list[dict], one per aircraft
     """
 
     states = raw.get("states") or []
