@@ -40,13 +40,6 @@ class DB_Handler:
         self.conn.executescript(SCHEMA_PATH.read_text())
         self.conn.commit()
 
-    def __enter__(self):
-        return self
-
-    def __exit__(self):
-        self.close()
-        return False
-
     def close(self):
         self.conn.close()
 
