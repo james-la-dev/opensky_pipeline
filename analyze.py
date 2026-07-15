@@ -73,8 +73,8 @@ class Analyzer:
                     WHEN baro_altitude < 1000 THEN '0-1km'
                     WHEN baro_altitude < 3000 THEN '1-3km'
                     WHEN baro_altitude < 6000 THEN '3-6km'
-                    WHEN baro_altitude < 9000 THEN '9-12km'
-                    ELSE '12km+'
+                    WHEN baro_altitude < 9000 THEN '6-9km'
+                    ELSE '9km+'
                 END AS band,
                 COUNT(*) as n
             FROM observations
