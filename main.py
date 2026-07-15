@@ -7,7 +7,7 @@ from datetime import datetime, timezone
 import requests
 
 from fetch import ApiHandler
-from clean import Cleaner
+from clean import clean_states
 from store import DB_Handler
 from analyze import Analyzer
 
@@ -31,7 +31,6 @@ class Main:
 
         self.api_handler = ApiHandler()
         self.db_handler = DB_Handler(self.db_path)
-        self.cleaner = Cleaner()
         self.analyzer = Analyzer(self.db_handler)
 
     def run_poll(self):
@@ -58,7 +57,7 @@ class Main:
         previous = (
             self.db_handler.latest_time_position()
         )  # snapshot BEFORE this poll is written
-        observations = self.cleaner.clean_states(raw, previous)
+        observations = clean_states(raw, previous)
 
         poll_meta = {
             "requested_at": requested_at,
