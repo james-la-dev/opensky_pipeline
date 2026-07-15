@@ -2,7 +2,7 @@
 Turns a raw `/states/all` response into cleaned dicts
 """
 
-MAX_ALTITUDE, MIN_ALTITUDE = 300.0, 15000.0
+MAX_ALTITUDE, MIN_ALTITUDE = 15000.0, 300.0
 FIELD_INDEX = {
     "icao24": 0,
     "callsign": 1,
