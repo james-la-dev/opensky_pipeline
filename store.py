@@ -26,7 +26,7 @@ OBSERVATION_COLUMNS = (
 )
 
 
-class Store:
+class DB_Handler:
     def __init__(self, db_path="flights.db"):
         self.db_path = db_path
         self.conn = sqlite3.connect(db_path)
@@ -43,7 +43,7 @@ class Store:
     def __enter__(self):
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self):
         self.close()
         return False
 
@@ -75,7 +75,7 @@ class Store:
         cur = self.conn.execute(
             """
             INSERT INTO polls (requested_at, api_time, state_count, http_status)
-            VALUES (:request_at, :api_time, :state_count, :http_status)
+            VALUES (:requested_at, :api_time, :state_count, :http_status)
             """,
             {
                 "requested_at": requested_at,
