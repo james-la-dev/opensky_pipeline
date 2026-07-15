@@ -45,8 +45,8 @@ class ApiHandler:
         try:
             with open(PATH_TO_CREDS) as f:
                 credentials = json.load(f)
-                self.client_id = credentials["clientId"]
-                self.client_secret = credentials["clientSecret"]
+                self._client_id = credentials["clientId"]
+                self._client_secret = credentials["clientSecret"]
         except FileNotFoundError:
             raise FileNotFoundError(
                 f"Credentials file not found at {PATH_TO_CREDS}. "
