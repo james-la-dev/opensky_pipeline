@@ -1,4 +1,3 @@
--- One row per API request, written whether or not the request succeeded. Records what was asked for, when it was asked, what openSky's own clock said, and how many state vectors came back before deduplication. This is the table that lets you distinguish "no aircraft were in the box" from "the poll failed", which is otherwise indistinguishable in the data.
 CREATE TABLE IF NOT EXISTS polls (
     id            INTEGER PRIMARY KEY,
     requested_at  TEXT NOT NULL,
@@ -7,7 +6,6 @@ CREATE TABLE IF NOT EXISTS polls (
     http_status   INTEGER
 );
 
--- The fact table. One row per observation per poll (no de-duplication is currently performed at write time; clean.py flags each row `is_fresh` rather than dropping stale repeats). Units are metric throughout, matching the API: altitudes in metres, velocity and vertical rate in metres per second, track in degrees.
 CREATE TABLE IF NOT EXISTS observations (
     id              INTEGER PRIMARY KEY,
     poll_id         INTEGER NOT NULL REFERENCES polls(id),
