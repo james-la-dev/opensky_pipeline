@@ -17,7 +17,7 @@ FIELD_INDEX = {
     "true_track": 10,
     "vertical_rate": 11,
     # index 12 is "sensors"
-    "geo_altitude": 13,  
+    "geo_altitude": 13,
     "squawk": 14,
 }
 
@@ -68,12 +68,13 @@ def _parse_state(state):
         "squawk": at("squawk"),
     }
 
+
 def _freshness(row, previous_positions):
     """
     1. If this row looks like a genuinely new position, return it, otherwise return 0
 
     2. No time_position means nothing to judge, so not fresh. An aircraft we have never seen
-    (with a valid time_position) is new. Otherwise fresh only if this reading is newer than the newest we 
+    (with a valid time_position) is new. Otherwise fresh only if this reading is newer than the newest we
     already have. This is what will allow analyze.py tell a live track from OpenSkly repeating a stale
     state.
     """
@@ -85,9 +86,10 @@ def _freshness(row, previous_positions):
         return 1
     return 1 if t > prev else 0
 
+
 def _anomalies(row):
     """
-        Attaches a comma-joined series of flags (or None) to indicate when there is an "anomaly" in the data.
+    Attaches a comma-joined series of flags (or None) to indicate when there is an "anomaly" in the data.
     """
     flags = []
     if row["longitude"] is None or row["latitude"] is None:
@@ -95,17 +97,19 @@ def _anomalies(row):
     if row["callsign"] is None:
         flags.append("no_callsign")
     alt = row["baro_altitude"]
-    if alt is not None and not (MIN_ALTITUDE <= alt <=MAX_ALTITUDE):
+    if alt is not None and not (MIN_ALTITUDE <= alt <= MAX_ALTITUDE):
         flags.append("impossible_altitude")
     if row["velocity"] is not None and row["velocity"] < 0:
         flags.append("negative_velocity")
     return ",".join(flags) if flags else None
+
 
 def _as_float(value):
     try:
         return float(value) if value is not None else None
     except (TypeError, ValueError):
         return None
+
 
 def _as_int(value):
     try:
